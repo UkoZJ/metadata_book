@@ -1,0 +1,18 @@
+- file: README
+- part: Raw Data
+  chapters:
+  - file: raw/MA/intro
+    sections:
+    - file: notebooks/reports
+      sections:
+      - file: meta/reports
+    - file: notebooks/analytic_tables
+      sections:
+        - file: meta/analytic_tables
+    - file: notebooks/tigapics
+      sections:
+        - file: meta/tigapics
+- part: Processed Data
+  chapters:
+  - file: processed/MA/intro
+

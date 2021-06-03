@@ -1,3 +1,0 @@
-# MosquitoAlert
-
-blabbla...
