@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dataset: analytic_tables &#8212; BigBytes Meta2Data</title>
+    <title>Dataset: model_tables &#8212; BigBytes Meta2Data</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,8 +54,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Metadata table" href="../meta/analytic_tables.html" />
-    <link rel="prev" title="Metadata table" href="../meta/reports.html" />
+    <link rel="next" title="Metadata table" href="../meta_ipynb/model_tables.html" />
+    <link rel="prev" title="Metadata table" href="../meta_ipynb/tigapics.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -87,19 +87,14 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../README_MApublic.html">
+  <a class="reference internal" href="../README_ma.html">
    Introduction
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  Raw Data
- </span>
-</p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="../raw/MA/intro.html">
+  <a class="reference internal" href="../meta/mosquito_alert/intro.html">
    MosquitoAlert
   </a>
   <ul class="current collapse-ul">
@@ -112,21 +107,7 @@
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
-      <a class="reference internal" href="../meta/reports.html">
-       Metadata table
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-   <li class="toctree-l2 current active collapsible-parent">
-    <a class="current reference internal" href="#">
-     Dataset: analytic_tables
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="../meta/analytic_tables.html">
+      <a class="reference internal" href="../meta_ipynb/reports.html">
        Metadata table
       </a>
      </li>
@@ -143,7 +124,24 @@
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
-      <a class="reference internal" href="../meta/tigapics.html">
+      <a class="reference internal" href="../meta_ipynb/tigapics.html">
+       Metadata table
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 current active collapsible-parent">
+    <a class="current reference internal" href="#">
+     Dataset:
+     <em>
+      model_tables
+     </em>
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../meta_ipynb/model_tables.html">
        Metadata table
       </a>
      </li>
@@ -154,18 +152,6 @@
   </ul>
   <i class="fas fa-chevron-down">
   </i>
- </li>
-</ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  Processed Data
- </span>
-</p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../processed/MA/intro.html">
-   MosquitoAlert
-  </a>
  </li>
 </ul>
 
@@ -207,7 +193,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notebooks/analytic_tables.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notebooks/model_tables.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -239,9 +225,24 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#distribution-by-sftp-protocol-from-mosquitoalert-webserver">
-   1. Distribution by SFTP protocol from MosquitoAlert webserver
+  <a class="reference internal nav-link" href="#part-1-encounter-prob-monthly-grid">
+   Part 1:
+   <em>
+    encounter_prob_monthly_grid
+   </em>
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#distribution-by-http-download-from-mosquitoalert-webserver">
+     1.1. Distribution by HTTP download from MosquitoAlert webserver
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#distribution-by-sftp-download-from-mosquitoalert-webserver">
+     1.2. Distribution by SFTP download from MosquitoAlert webserver
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -255,44 +256,95 @@
         
               <div>
                 
-  <div class="section" id="dataset-analytic-tables">
-<h1>Dataset: analytic_tables<a class="headerlink" href="#dataset-analytic-tables" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="distribution-by-sftp-protocol-from-mosquitoalert-webserver">
-<h2>1. Distribution by SFTP protocol from MosquitoAlert webserver<a class="headerlink" href="#distribution-by-sftp-protocol-from-mosquitoalert-webserver" title="Permalink to this headline">¶</a></h2>
-<p>Before we are able to download datasets that are part of the <em>analytic_tables</em>
-we need a user name and password to ssh-access a remote machine.</p>
-<p>From our metadata catalog we are able to get all the necessary information
-to open a SFTP connection with the machine that holds our dataset. For example,
-if we would like to download the dataset <em>tigaserver_app_tigauser</em> we just
-needs its contentUrl information</p>
+  <div class="section" id="dataset-model-tables">
+<h1>Dataset: <em>model_tables</em><a class="headerlink" href="#dataset-model-tables" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">src.utils</span> <span class="k">as</span> <span class="nn">ut</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">src.utils</span> <span class="k">as</span> <span class="nn">ut</span>
 <span class="kn">import</span> <span class="nn">src.ftp</span> <span class="k">as</span> <span class="nn">ftp</span>
 
 <span class="c1"># Setup the root path of the application</span>
 <span class="n">project_path</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">project_path</span><span class="p">()</span>
 
 <span class="c1"># Get contentUrl from metadata file</span>
-<span class="n">meta_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/raw/MA/analytic_tables.json&#39;</span>
+<span class="n">meta_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/meta/mosquito_alert/model_tables.json&#39;</span>
 <span class="n">ut</span><span class="o">.</span><span class="n">info_meta</span><span class="p">(</span><span class="n">meta_filename</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Provided with the url, we are able to get our dataset in a dataframe format
-from the Mosquito Alert webserver. Note that <em>ma_analytic_tables</em> has many
-parts (datasets) and one of those is <em>tigaserver_app_tigauser</em> which is the
-first in the list of the <em>hasPart</em> key attribute of the metadata file.</p>
+<div class="section" id="part-1-encounter-prob-monthly-grid">
+<h2>Part 1: <em>encounter_prob_monthly_grid</em><a class="headerlink" href="#part-1-encounter-prob-monthly-grid" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="distribution-by-http-download-from-mosquitoalert-webserver">
+<h3>1.1. Distribution by HTTP download from MosquitoAlert webserver<a class="headerlink" href="#distribution-by-http-download-from-mosquitoalert-webserver" title="Permalink to this headline">¶</a></h3>
+<p>This distribution allows to download the estimated probability of encountering
+for a given type of mosquito on monthly basis. This information is displayed
+on the <a class="reference external" href="http://webserver.mosquitoalert.com/static/tigapublic/spain.html#/en/">Mosquito Alert public map</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the dataset tigaserver_app_tigauser form the ma_analytic_tables catalog</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
 <span class="n">contentUrl</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">distr_name</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span>
-    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Make folders for data download</span>
 <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s1">&#39;</span>
 <span class="n">ut</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to get a model output we need to provide the mosquito type, year and
+month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set mosquito type (&#39;tig&#39; for Aedes Albopictus and &#39;jap&#39; for Aedes Japonicus)</span>
+<span class="n">MOSQUITO_TYPE</span> <span class="o">=</span> <span class="s1">&#39;tig&#39;</span>
+<span class="c1"># For example get all the months for a given year</span>
+<span class="n">YEAR</span> <span class="o">=</span> <span class="s1">&#39;2021&#39;</span>
+<span class="n">MONTH</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">MONTH</span><span class="p">:</span>
+    <span class="c1"># Download each CSV-file </span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">contentUrl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MOSQUITO_TYPE</span><span class="o">=</span><span class="n">MOSQUITO_TYPE</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">m</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">MOSQUITO_TYPE</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">YEAR</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="distribution-by-sftp-download-from-mosquitoalert-webserver">
+<h3>1.2. Distribution by SFTP download from MosquitoAlert webserver<a class="headerlink" href="#distribution-by-sftp-download-from-mosquitoalert-webserver" title="Permalink to this headline">¶</a></h3>
+<p>This distribution allows to download exactly the same dataset as above but
+within SFTP. Before we are able to download the dataset we would need a user
+name and password to ssh-access a remote machine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
+<span class="n">contentUrl</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">distr_name</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span>
+    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Make folders for data download</span>
+<span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="n">ut</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set mosquito type (&#39;tig&#39; for Aedes Albopictus and &#39;jap&#39; for Aedes Japonicus)</span>
+<span class="n">MOSQUITO_TYPE</span> <span class="o">=</span> <span class="s1">&#39;tig&#39;</span>
+<span class="c1"># For example get just one months for a given year</span>
+<span class="n">YEAR</span> <span class="o">=</span> <span class="s1">&#39;2021&#39;</span>
+<span class="n">MONTH</span> <span class="o">=</span> <span class="s1">&#39;01&#39;</span>
+<span class="n">contentUrl_path</span> <span class="o">=</span> <span class="n">contentUrl</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">MOSQUITO_TYPE</span><span class="o">=</span><span class="n">MOSQUITO_TYPE</span><span class="p">,</span>
+    <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span>
+    <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -308,7 +360,7 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
     <span class="n">port</span> <span class="o">=</span> <span class="n">contentUrl</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">contentUrl</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
     <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">,</span>
-    <span class="n">remotepath</span> <span class="o">=</span> <span class="n">contentUrl</span><span class="o">.</span><span class="n">path</span>
+    <span class="n">remotepath</span> <span class="o">=</span> <span class="n">contentUrl_path</span>
     <span class="p">)</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -319,7 +371,7 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save reports on CSV or parquet</span>
-<span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/dataset&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">MOSQUITO_TYPE</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">YEAR</span><span class="si">}</span><span class="s1">&#39;</span>
 <span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.parquet&#39;</span><span class="p">)</span> <span class="c1"># very low file-size (need to install pyArrow)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">)</span> <span class="c1"># x10 size if compared with the dataframe</span>
 </pre></div>
@@ -327,6 +379,7 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
 </div>
 </div>
 <div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 </div>
@@ -356,8 +409,8 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../meta/reports.html" title="previous page">Metadata table</a>
-    <a class='right-next' id="next-link" href="../meta/analytic_tables.html" title="next page">Metadata table</a>
+    <a class='left-prev' id="prev-link" href="../meta_ipynb/tigapics.html" title="previous page">Metadata table</a>
+    <a class='right-next' id="next-link" href="../meta_ipynb/model_tables.html" title="next page">Metadata table</a>
 
         </div>
         

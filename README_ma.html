@@ -54,7 +54,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MosquitoAlert" href="raw/MA/intro.html" />
+    <link rel="next" title="MosquitoAlert" href="meta/mosquito_alert/intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -91,14 +91,9 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  Raw Data
- </span>
-</p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="raw/MA/intro.html">
+  <a class="reference internal" href="meta/mosquito_alert/intro.html">
    MosquitoAlert
   </a>
   <ul class="collapse-ul">
@@ -111,21 +106,7 @@
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
-      <a class="reference internal" href="meta/reports.html">
-       Metadata table
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="notebooks/analytic_tables.html">
-     Dataset: analytic_tables
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="meta/analytic_tables.html">
+      <a class="reference internal" href="meta_ipynb/reports.html">
        Metadata table
       </a>
      </li>
@@ -142,7 +123,24 @@
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
-      <a class="reference internal" href="meta/tigapics.html">
+      <a class="reference internal" href="meta_ipynb/tigapics.html">
+       Metadata table
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="notebooks/model_tables.html">
+     Dataset:
+     <em>
+      model_tables
+     </em>
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="meta_ipynb/model_tables.html">
        Metadata table
       </a>
      </li>
@@ -153,18 +151,6 @@
   </ul>
   <i class="fas fa-chevron-down">
   </i>
- </li>
-</ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  Processed Data
- </span>
-</p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="processed/MA/intro.html">
-   MosquitoAlert
-  </a>
  </li>
 </ul>
 
@@ -206,7 +192,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/README_MApublic.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/README_ma.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -242,13 +228,6 @@
    Metadata table
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-flow-diagram">
-   Data Flow Diagram
-  </a>
-  <ul class="nav section-nav flex-column">
-  </ul>
- </li>
 </ul>
 
         </nav>
@@ -265,20 +244,10 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>The scope of this documentation is to provide:</p>
 <ul class="simple">
-<li><p>Extensive metadata description of datasets that are used in the <em>BigBytes</em> project</p></li>
+<li><p>Extensive metadata description of <strong>public</strong> datasets that are used in the <em>Mosquito Alert</em> project</p></li>
 <li><p>Data access examples by <em>Python</em> scripts</p></li>
 </ul>
-<p>For metadata description, we implement the <a class="reference external" href="https://schema.org/">Schema.org</a> protocol based on the <em>Dataset</em> type adapted for scientific data catalogs. The metadata information is stored in <code class="docutils literal notranslate"><span class="pre">.json</span></code> files that should be validated with Google’ <a class="reference external" href="https://search.google.com/structured-data/testing-tool/u/0/">Structured Data Testing Tool</a> or <a class="reference external" href="https://search.google.com/test/rich-results?utm_campaign=sdtt&amp;utm_medium=code&amp;id=zX-8vS_sX8Vir1CdBTMmrg">Rich Result Test</a>. For visualization convenience, <code class="docutils literal notranslate"><span class="pre">.json</span></code> are converted into <code class="docutils literal notranslate"><span class="pre">.html</span></code> nested tables.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Anytime a source metadata <code class="docutils literal notranslate"><span class="pre">.json</span></code> file are modified or updated we need to run <code class="docutils literal notranslate"><span class="pre">build_info.py</span></code> to build the <code class="docutils literal notranslate"><span class="pre">html</span></code> dataset tables.</p>
-</div>
-<p>Data access <em>Python</em> scripts use metadata <code class="docutils literal notranslate"><span class="pre">.json</span></code> files to get all needed information. Scripts use a <em>percentage</em> formatting to denote executable code cells (<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">%%</span></code>) and markdown content cells (<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">%%</span> <span class="pre">[markdown]</span></code>). This allows to use editors like <em>Visual Studio Code</em>, <em>Spyder</em>, etc. and to perform versioning control easily.</p>
-<p><em>Jupyter Book</em> is used to build this documentation. Thus, data access scripts in <code class="docutils literal notranslate"><span class="pre">.py</span></code> should be converted to the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> format by <em>JupyText</em> application.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>After any modification to <code class="docutils literal notranslate"><span class="pre">.py</span></code> source files, we should take care to update the <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> files by running <code class="docutils literal notranslate"><span class="pre">build_ipynb.sh</span></code> before building a new version of documentation.</p>
-</div>
+<p>For metadata description, we implement the <a class="reference external" href="https://schema.org/">Schema.org</a> protocol based on the <em>Dataset</em> type adapted for scientific data catalogs. The metadata information is stored in <code class="docutils literal notranslate"><span class="pre">.json</span></code> files validated with Google’ <a class="reference external" href="https://search.google.com/structured-data/testing-tool/u/0/">Structured Data Testing Tool</a> or <a class="reference external" href="https://search.google.com/test/rich-results?utm_campaign=sdtt&amp;utm_medium=code&amp;id=zX-8vS_sX8Vir1CdBTMmrg">Rich Result Test</a>.</p>
 <div class="section" id="metadata-table">
 <h2>Metadata table<a class="headerlink" href="#metadata-table" title="Permalink to this headline">¶</a></h2>
 <table class="colwidths-auto table">
@@ -291,41 +260,26 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><span class="xref myst">ma_analytic_tables</span></p></td>
-<td class="text-align:center"><p>Mosquito Alert</p></td>
-<td class="text-align:left"><p>Tables from Mosquito Alert database selected for analytic purposes</p></td>
-<td class="text-align:center"><p>Private</p></td>
-<td class="text-align:center"><p>✔</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="xref myst">ma_reports</span></p></td>
-<td class="text-align:center"><p>Mosquito Alert</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="meta_ipynb/reports.html"><span class="doc">reports</span></a></p></td>
+<td class="text-align:center"><p>MosquitoAlert</p></td>
 <td class="text-align:left"><p>Yearly reports of bites, breeding sites and adult mosquito encounters</p></td>
 <td class="text-align:center"><p>Public</p></td>
 <td class="text-align:center"><p>✔</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="xref myst">ma_tigapics</span></p></td>
-<td class="text-align:center"><p>Mosquito Alert</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="meta_ipynb/tigapics.html"><span class="doc">tigapics</span></a></p></td>
+<td class="text-align:center"><p>MosquitoAlert</p></td>
 <td class="text-align:left"><p>Pictures of adult mosquitos and breeding sites with classification labels for ML traning</p></td>
 <td class="text-align:center"><p>Public</p></td>
 <td class="text-align:center"><p>✔</p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="xref myst">ma_model_tables</span></p></td>
-<td class="text-align:center"><p>Mosquito Alert</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="meta_ipynb/model_tables.html"><span class="doc">model_tables</span></a></p></td>
+<td class="text-align:center"><p>MosquitoAlert</p></td>
 <td class="text-align:left"><p>Results from the Bayesian multilevel model that feed the Mosquito Alert raster maps</p></td>
 <td class="text-align:center"><p>Public</p></td>
-<td class="text-align:center"><p>✖</p></td>
+<td class="text-align:center"><p>✔</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="data-flow-diagram">
-<h2>Data Flow Diagram<a class="headerlink" href="#data-flow-diagram" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-default" id="bigbytes-dfd">
-<a class="reference internal image-reference" href="_images/BigBytes.svg"><img alt="_images/BigBytes.svg" src="_images/BigBytes.svg" width="600px" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">BigBytes data flow diagram</span><a class="headerlink" href="#bigbytes-dfd" title="Permalink to this image">¶</a></p>
-</div>
-<div class="toctree-wrapper compound">
-</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -356,7 +310,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='right-next' id="next-link" href="raw/MA/intro.html" title="next page">MosquitoAlert</a>
+    <a class='right-next' id="next-link" href="meta/mosquito_alert/intro.html" title="next page">MosquitoAlert</a>
 
         </div>
         
