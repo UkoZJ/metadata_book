@@ -243,11 +243,6 @@
    1. Distribution by image download from MosquitoAlert webserver
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#distribution-from-seafile-cloud-repository-of-raw-images">
-   2. Distribution from SeaFile cloud repository of raw images
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -325,50 +320,6 @@ where the measured variable <em>movelab_annotation</em> is a dictionary with key
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="distribution-from-seafile-cloud-repository-of-raw-images">
-<h2>2. Distribution from SeaFile cloud repository of raw images<a class="headerlink" href="#distribution-from-seafile-cloud-repository-of-raw-images" title="Permalink to this headline">¶</a></h2>
-<p>This distribution allows to download all raw pictures of pictures (adults and
-sites) for a given year. In our example we download pictures for a given year
-only.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
-<span class="n">contentUrl</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">distr_name</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span>
-    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Make folders for data download</span>
-<span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s1">&#39;</span>
-<span class="n">ut</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose the year of relative pictures</span>
-<span class="n">year</span> <span class="o">=</span> <span class="s1">&#39;2014&#39;</span>
-<span class="n">contentUrl_year</span> <span class="o">=</span> <span class="n">contentUrl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">YEAR</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
-
-<span class="c1"># Download and open the tar.gz container</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">contentUrl_year</span><span class="p">)</span>
-<span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> 
-</pre></div>
-</div>
-</div>
-</div>
-<p>We have the option to exctract all raw pictures into a distribution folder.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Below we display one of the many breeding sites and mosquito adult pictures
-relative to the chosen year 2014.</p>
-<a class="bg-primary mb-1 reference internal image-reference" href="../_images/000076.png"><img alt="Breeding site" class="bg-primary mb-1 align-center" src="../_images/000076.png" style="width: 400px;" /></a>
-<a class="bg-primary mb-1 reference internal image-reference" href="../_images/000104.png"><img alt="Aedes albopictus" class="bg-primary mb-1 align-center" src="../_images/000104.png" style="width: 400px;" /></a>
 <div class="toctree-wrapper compound">
 </div>
 </div>
