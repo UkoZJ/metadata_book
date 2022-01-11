@@ -1,25 +1,19 @@
 - file: README_ma
 
-#- file: meta/environment/intro
-#  sections:
-#  - file: notebooks/meteocat_xema
-#    sections:
-#    - file: meta_ipynb/meteocat_xema
-
 - file: meta/mosquito_alert/intro
   sections:
   - file: notebooks/reports
     sections:
     - file: meta_ipynb/reports
-#  - file: notebooks/irideon_senscape_traps
-#    sections:
-#    - file: meta_ipynb/irideon_senscape_traps
   - file: notebooks/tigapics
     sections:
       - file: meta_ipynb/tigapics
   - file: notebooks/model_tables
     sections:
       - file: meta_ipynb/model_tables
+  - file: notebooks/sampling_effort
+    sections:
+    - file: meta_ipynb/sampling_effort
   - file: notebooks/analytic_tables
     sections:
     - file: meta_ipynb/analytic_tables
