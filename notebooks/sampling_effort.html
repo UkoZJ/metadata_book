@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catalog: analytic_tables &#8212; BigBytes Meta2Data</title>
+    <title>Dataset: sampling_effort &#8212; BigBytes Meta2Data</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,8 +54,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Metadata table" href="../meta_ipynb/analytic_tables.html" />
-    <link rel="prev" title="Metadata table" href="../meta_ipynb/sampling_effort.html" />
+    <link rel="next" title="Metadata table" href="../meta_ipynb/sampling_effort.html" />
+    <link rel="prev" title="Metadata table" href="../meta_ipynb/model_tables.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -149,8 +149,8 @@
     <i class="fas fa-chevron-down">
     </i>
    </li>
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="sampling_effort.html">
+   <li class="toctree-l2 current active collapsible-parent">
+    <a class="current reference internal" href="#">
      Dataset:
      <em>
       sampling_effort
@@ -166,8 +166,8 @@
     <i class="fas fa-chevron-down">
     </i>
    </li>
-   <li class="toctree-l2 current active collapsible-parent">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="analytic_tables.html">
      Catalog: analytic_tables
     </a>
     <ul class="collapse-ul">
@@ -224,7 +224,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notebooks/analytic_tables.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notebooks/sampling_effort.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -256,19 +256,14 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dataset-tigaserver-app-tigauser">
-   Dataset:
-   <em>
-    tigaserver_app_tigauser
-   </em>
+  <a class="reference internal nav-link" href="#distribution-from-zenodo-cloud">
+   1. Distribution from Zenodo cloud
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#distribution-by-sftp-protocol-from-mosquitoalert-webserver">
-     1. Distribution by SFTP protocol from MosquitoAlert webserver
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distribution-from-mosquitoalert-github-repository">
+   2. Distribution from MosquitoAlert Github repository
+  </a>
  </li>
 </ul>
 
@@ -282,45 +277,40 @@
         
               <div>
                 
-  <div class="section" id="catalog-analytic-tables">
-<h1>Catalog: analytic_tables<a class="headerlink" href="#catalog-analytic-tables" title="Permalink to this headline">¶</a></h1>
-<p>Before we are able to download datasets that are part of the <em>analytic_tables</em>
-catalog we need a user name and password to ssh-access a remote machine.</p>
-<p>From our metadata catalog we are able to get all the necessary information
-to open a SFTP connection with the machine that holds our dataset. First we
-check what datasets are in the catalog.</p>
+  <div class="section" id="dataset-sampling-effort">
+<h1>Dataset: <em>sampling_effort</em><a class="headerlink" href="#dataset-sampling-effort" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">src.utils</span> <span class="k">as</span> <span class="nn">ut</span>
-<span class="kn">import</span> <span class="nn">src.ftp</span> <span class="k">as</span> <span class="nn">ftp</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">zipfile</span><span class="o">,</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
+
+<span class="kn">import</span> <span class="nn">src.utils</span> <span class="k">as</span> <span class="nn">ut</span>
 
 <span class="c1"># Setup the root path of the application</span>
 <span class="n">project_path</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">project_path</span><span class="p">()</span>
 
 <span class="c1"># Get contentUrl from metadata file</span>
-<span class="n">meta_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s2">/meta/mosquito_alert/analytic_tables.json&quot;</span>
+<span class="n">meta_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/meta/mosquito_alert/sampling_effort.json&#39;</span>
 <span class="n">ut</span><span class="o">.</span><span class="n">info_meta</span><span class="p">(</span><span class="n">meta_filename</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="dataset-tigaserver-app-tigauser">
-<h2>Dataset: <em>tigaserver_app_tigauser</em><a class="headerlink" href="#dataset-tigaserver-app-tigauser" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="distribution-by-sftp-protocol-from-mosquitoalert-webserver">
-<h3>1. Distribution by SFTP protocol from MosquitoAlert webserver<a class="headerlink" href="#distribution-by-sftp-protocol-from-mosquitoalert-webserver" title="Permalink to this headline">¶</a></h3>
-<p>If we would like to download the dataset <em>tigaserver_app_tigauser</em> we just
-needs its contentUrl information. Note that <em>analytic_tables</em> has many
-parts (datasets) and one of those is <em>tigaserver_app_tigauser</em> which is the
-first in the list of the <em>hasPart</em> key attribute of the metadata file.</p>
+<div class="section" id="distribution-from-zenodo-cloud">
+<h2>1. Distribution from Zenodo cloud<a class="headerlink" href="#distribution-from-zenodo-cloud" title="Permalink to this headline">¶</a></h2>
+<p>This dataset is updated nightly and the most recent version can be downloaded
+from Zenodo at <a class="reference external" href="https://doi.org/10.5281/zenodo.5802476">https://doi.org/10.5281/zenodo.5802476</a>. This URL will always
+resolve to the most recent version of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the dataset tigaserver_app_tigauser form the _analytic_tables_ catalog</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
 <span class="n">contentUrl</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">distr_name</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span>
-    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
+    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="c1"># Make folders for data download</span>
-<span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s2">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s1">&#39;</span>
 <span class="n">ut</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -328,35 +318,71 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Insert user password to connect by ftp</span>
-<span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download and open the zip container</span>
 
-<span class="c1"># Get the dataframe</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">ftp</span><span class="o">.</span><span class="n">read_csv_sftp</span><span class="p">(</span>
-    <span class="n">hostname</span><span class="o">=</span><span class="n">contentUrl</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="n">contentUrl</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
-    <span class="n">username</span><span class="o">=</span><span class="n">contentUrl</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
-    <span class="n">remotepath</span><span class="o">=</span><span class="n">contentUrl</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="c1"># Get the latest zenodo file version of the dataset</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">contentUrl</span><span class="p">)</span>
+<span class="n">file_url</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span><span class="s1">&#39;filename&#39;</span><span class="p">})[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+<span class="n">file_contentUrl</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">file_url</span><span class="p">)</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="c1"># Download the dataset</span>
+<span class="n">r_file</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_contentUrl</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r_file</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have the option to extract all the files into a distribution folder.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save reports on CSV or parquet</span>
-<span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/dataset&quot;</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.parquet&quot;</span><span class="p">)</span>  <span class="c1"># very low file-size (need to install pyArrow)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span>  <span class="c1"># x10 size if compared with the dataframe</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the 0.05 degree cell resolution dataset into a dataframe </span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;cellres_05.csv.gz&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">s</span>
+<span class="n">df_05</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">df_05</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="distribution-from-mosquitoalert-github-repository">
+<h2>2. Distribution from MosquitoAlert Github repository<a class="headerlink" href="#distribution-from-mosquitoalert-github-repository" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
+<span class="n">contentUrl</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">distr_name</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span>
+    <span class="n">meta_filename</span><span class="p">,</span> <span class="n">idx_distribution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx_hasPart</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Make folders for data download</span>
+<span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">project_path</span><span class="si">}</span><span class="s1">/data/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">distr_name</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="n">ut</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download the dataset</span>
+
+<span class="c1"># Get the latest GitHub file version of the dataset</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">contentUrl</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="toctree-wrapper compound">
-</div>
 </div>
 </div>
 </div>
@@ -386,8 +412,8 @@ first in the list of the <em>hasPart</em> key attribute of the metadata file.</p
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../meta_ipynb/sampling_effort.html" title="previous page">Metadata table</a>
-    <a class='right-next' id="next-link" href="../meta_ipynb/analytic_tables.html" title="next page">Metadata table</a>
+    <a class='left-prev' id="prev-link" href="../meta_ipynb/model_tables.html" title="previous page">Metadata table</a>
+    <a class='right-next' id="next-link" href="../meta_ipynb/sampling_effort.html" title="next page">Metadata table</a>
 
         </div>
         

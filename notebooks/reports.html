@@ -117,7 +117,7 @@
    </li>
    <li class="toctree-l2 collapsible-parent">
     <a class="reference internal" href="tigapics.html">
-     Dataset:
+     Catalog:
      <em>
       tigapics
      </em>
@@ -150,8 +150,25 @@
     </i>
    </li>
    <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="sampling_effort.html">
+     Dataset:
+     <em>
+      sampling_effort
+     </em>
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../meta_ipynb/sampling_effort.html">
+       Metadata table
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
     <a class="reference internal" href="analytic_tables.html">
-     Dataset: analytic_tables
+     Catalog: analytic_tables
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
@@ -266,6 +283,8 @@
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
 <span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">zipfile</span><span class="o">,</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
 
 <span class="kn">import</span> <span class="nn">src.utils</span> <span class="k">as</span> <span class="nn">ut</span>
 
@@ -281,11 +300,9 @@
 </div>
 <div class="section" id="distribution-from-zenodo-cloud">
 <h2>1. Distribution from Zenodo cloud<a class="headerlink" href="#distribution-from-zenodo-cloud" title="Permalink to this headline">¶</a></h2>
-<p>Pay attention to get the url of the most recent version of the dataset. Below
-we give an url just as an example, but probably it is not pointing to the
-most recent dataset version. However, if the dataset link is not pointing to
-the last dataset version, Zenodo issues a waring and a link to the most recent
-version.</p>
+<p>This dataset is updated nightly and the most recent version can be downloaded
+from Zenodo at <a class="reference external" href="https://doi.org/10.5281/zenodo.597466">https://doi.org/10.5281/zenodo.597466</a>. This URL will always
+resolve to the most recent version of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
@@ -302,8 +319,15 @@ version.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download and open the zip container</span>
+
+<span class="c1"># Get the latest zenodo file version of the dataset</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">contentUrl</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="n">file_url</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span><span class="s1">&#39;filename&#39;</span><span class="p">})[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+<span class="n">file_contentUrl</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">file_url</span><span class="p">)</span>
+
+<span class="c1"># Download the dataset</span>
+<span class="n">r_file</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_contentUrl</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r_file</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -316,8 +340,8 @@ version.</p>
 </div>
 </div>
 </div>
-<p>Or we could just concatenate all reports into a single dataframe and save
-it on a file.</p>
+<p>Or we could concatenate all reports into a single dataframe before and save
+it as a file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Merge all reports into a dataframe</span>
@@ -334,9 +358,9 @@ it on a file.</p>
 </div>
 </div>
 </div>
-<p>Some report attributes are key-value json-like data, that need additional
-tables to be fully comprehensive. For example, for “tiger_respones”,
-since multi language translations are available, we make language as index</p>
+<p>Some attributes of reports are key-value json-like data, that need additional
+tables to be fully comprehensive (for example, tiger_responses). Since
+multilanguage translations are available, we make language as index.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reports_translation</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;translation_dict&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
@@ -376,8 +400,7 @@ since multi language translations are available, we make language as index</p>
 </div>
 <div class="section" id="distribution-from-mosquitoalert-github-repository">
 <h2>2. Distribution from MosquitoAlert Github repository<a class="headerlink" href="#distribution-from-mosquitoalert-github-repository" title="Permalink to this headline">¶</a></h2>
-<p>In contrast with the Zenodo distribution, the dataset stored on GitHub server is
-always the latest available version since it is daily loaded into Zenodo.</p>
+<p>This dataset is also updated daily on GitHub and can be accessed from there.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get metadata</span>
