@@ -1,6 +1,6 @@
 # Pages Setup
 
-1. Build the page with `source_book_ma.sh`
+1. Build the page with `source build_book_ma.sh`
 2. Setup git `config` to push to production repository by uncommenting:
    ```
    # Production remote (uncomment to synchronize dev with prod)
