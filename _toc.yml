@@ -1,19 +1,40 @@
-- file: README_ma
+- file: README
 
 - file: meta/mosquito_alert/intro
   sections:
-  - file: notebooks/reports
+
+  - file: meta_ipynb/reports
+    title: reports
     sections:
-    - file: meta_ipynb/reports
-  - file: notebooks/tigapics
+    - file: notebooks/reports
+      title: code-example
+
+  - file: meta_ipynb/reports_raw
+    title: reports_raw
     sections:
-      - file: meta_ipynb/tigapics
-  - file: notebooks/model_tables
+    - file: notebooks/reports_raw
+      title: code-example
+
+  - file: meta_ipynb/analytic_tables
+    title: analytic_tables
     sections:
-      - file: meta_ipynb/model_tables
-  - file: notebooks/sampling_effort
+    - file: notebooks/analytic_tables
+      title: code-example
+
+  - file: meta_ipynb/tigapics
+    title: tigapics
     sections:
-    - file: meta_ipynb/sampling_effort
-  - file: notebooks/analytic_tables
+    - file: notebooks/tigapics
+      title: code-example
+
+  - file: meta_ipynb/model_tables
+    title: model_tables
     sections:
-    - file: meta_ipynb/analytic_tables
+    - file: notebooks/model_tables
+      title: code-example
+
+  - file: meta_ipynb/sampling_effort
+    title: sampling_effort
+    sections:
+    - file: notebooks/sampling_effort
+      title: code-example
