@@ -2,8 +2,6 @@ format: jb-book
 root: README_ma
 chapters:
 
-#- file: README_ma
-
 - file: meta/mosquito_alert/intro
   sections:
 
@@ -42,9 +40,21 @@ chapters:
     sections:
     - file: notebooks/analytic_tables
       title: code-example
+  
+  - file: meta_ipynb/photos_clean
+    title: photos_clean
+    sections:
+    - file: notebooks/photos_clean
+      title: code-example
 
   - file: meta_ipynb/model_tables
     title: model_tables
     sections:
     - file: notebooks/model_tables
+      title: code-example
+
+  - file: meta_ipynb/muni_preds
+    title: muni_preds
+    sections:
+    - file: notebooks/muni_preds
       title: code-example
