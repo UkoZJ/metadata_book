@@ -1,4 +1,8 @@
-- file: README_ma
+format: jb-book
+root: README_ma
+chapters:
+
+#- file: README_ma
 
 - file: meta/mosquito_alert/intro
   sections:

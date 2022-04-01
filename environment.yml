@@ -1,0 +1,24 @@
+name: metadata
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - tqdm
+  - requests
+  - bs4
+  - paramiko
+#  - psycopg2
+# Pandas and co.
+  - pandas
+  - pyarrow
+  - matplotlib
+# netCDF datasets
+#  - xarray
+#  - h5netcdf
+#  - cartopy
+#  - cdsapi
+# Pip installs
+#  - pip
+#  - pip:
+#    sodapy
