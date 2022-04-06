@@ -2,6 +2,7 @@ format: jb-book
 root: README_ma
 chapters:
 
+# Mosquito Alert
 - file: meta/mosquito_alert/intro
   sections:
 
@@ -13,9 +14,9 @@ chapters:
 
   - file: meta_ipynb/reports_raw
     title: reports_raw
-    sections:
-    - file: notebooks/reports_raw
-      title: code-example
+#    sections:
+#    - file: notebooks/reports_raw
+#      title: code-example
 
   - file: meta_ipynb/tigapics
     title: tigapics
@@ -31,16 +32,16 @@ chapters:
 
   - file: meta_ipynb/user_locations
     title: user_locations
-    sections:
-    - file: notebooks/user_locations
-      title: code-example
+#    sections:
+#    - file: notebooks/user_locations
+#      title: code-example
 
   - file: meta_ipynb/analytic_tables
     title: analytic_tables
     sections:
     - file: notebooks/analytic_tables
       title: code-example
-  
+
   - file: meta_ipynb/photos_clean
     title: photos_clean
     sections:
