@@ -16,6 +16,9 @@ python $PATH_DEV/metadata/json2head.py
 # Modify generated metadata tables (collapse, style, etc.)
 python $PATH_DEV/metadata/meta_collapse.py
 
+# Add tutorial videos to _static folder
+cp -r $PATH_DEV/metadata/docs/videos ./_build/html/_static
+
 # Add google website index verification file 
 cp googled194e0c154256c20.html ./_build/html
 

@@ -2,6 +2,9 @@ format: jb-book
 root: README_ma
 chapters:
 
+# User guide
+- file: user_guide
+
 # Mosquito Alert
 - file: meta/mosquito_alert/intro
   sections:
